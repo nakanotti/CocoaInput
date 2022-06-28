@@ -14,7 +14,7 @@ import net.minecraft.client.gui.screens.inventory.SignEditScreen;
 public class SignEditScreenMixin {
 	 SignEditScreenWrapper wrapper;
 	 
-	 @Inject(method="init",at=@At("RETURN"))
+	 @Inject(method="init*",at=@At("RETURN"))
 	 private void init(CallbackInfo ci) {
 		 wrapper = new SignEditScreenWrapper((SignEditScreen)(Object)this);
 	 }
