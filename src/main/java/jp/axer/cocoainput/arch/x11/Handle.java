@@ -7,7 +7,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.WString;
 
 public interface Handle extends Library{
-	Handle INSTANCE = (Handle)Native.loadLibrary("x11cocoainput", Handle.class);
+	Handle INSTANCE = Native.load("x11cocoainput", Handle.class);
 	
 	void set_focus(int flag);
 	void initialize(

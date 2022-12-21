@@ -6,7 +6,7 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 
 public interface Handle extends Library{
-    Handle INSTANCE=(Handle)Native.loadLibrary("cocoainput", Handle.class);
+    Handle INSTANCE = Native.load("cocoainput", Handle.class);
 
 
     void initialize(Callback log,Callback error,Callback debug);

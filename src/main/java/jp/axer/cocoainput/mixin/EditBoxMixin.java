@@ -12,7 +12,7 @@ import net.minecraft.client.gui.components.EditBox;
 public class EditBoxMixin {
 	 EditBoxWrapper wrapper;
 	 
-	 @Inject(method="<init>*",at=@At("RETURN"))
+	 @Inject(method="<init>(Lnet/minecraft/client/gui/Font;IIIILnet/minecraft/client/gui/components/EditBox;Lnet/minecraft/network/chat/Component;)V",at=@At("RETURN"))
 	 private void init(CallbackInfo ci) {
 		 wrapper = new EditBoxWrapper((EditBox)(Object)this);
 	 }

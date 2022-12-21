@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.12-SNAPSHOT'
+	id 'fabric-loom' version '1.0-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -54,7 +54,7 @@ tasks.withType(JavaCompile).configureEach {
 	it.options.release = 17
 
 	// Check for details.
-    //it.options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    it.options.compilerArgs << "-Xlint:deprecation" // << "-Xlint:unchecked" 
 }
 
 java {
@@ -64,8 +64,8 @@ java {
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 	// if it is present.
 	// If you remove this line, sources will not be generated.
-	sourceSets.main.java.srcDirs+=['../src/main']
-	sourceSets.main.java.srcDirs+=['../src/fabric']
+	sourceSets.main.java.srcDirs+=['../src/main/java']
+	sourceSets.main.java.srcDirs+=['../src/fabric/java']
 
 	sourceSets.main.resources.srcDirs+=['../src/main/resources']
 	sourceSets.main.resources.srcDirs+=['../src/fabric/resources']

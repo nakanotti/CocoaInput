@@ -14,6 +14,7 @@ import net.minecraft.client.gui.screens.inventory.BookEditScreen;
 import net.minecraft.client.StringSplitter;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.ComponentContents;
 
 public class BookEditScreenWrapper extends IMEReceiver {
     private IMEOperator myIME;
@@ -95,9 +96,9 @@ public class BookEditScreenWrapper extends IMEReceiver {
             StringSplitter manager = fontRendererObj.getSplitter();
             List<FormattedText> lines = manager.splitLines(owner.getCurrentPageText(), 116, Style.EMPTY);
             final String[] lastLine = new String[1];
-            FormattedText.ContentConsumer acceptor = new FormattedText.ContentConsumer() {
+            FormattedText.ContentConsumer<ComponentContents> acceptor = new FormattedText.ContentConsumer<ComponentContents>() {
                 @Override
-                public Optional accept(String p_accept_1_) {
+                public Optional<ComponentContents> accept(String p_accept_1_) {
                     lastLine[0] = p_accept_1_;
                     return Optional.empty();
                 }

@@ -61,8 +61,8 @@ public class EditBoxWrapper extends IMEReceiver {
     @Override
     public Rect getRect() {
         return new Rect(//{x,y}
-                (owner.font.width(owner.getValue().substring(0, originalCursorPosition)) + (owner.bordered ? owner.x + 4 : owner.x)),
-                (owner.font.lineHeight + (owner.bordered ? owner.y + (owner.getHeight() - 8) / 2 : owner.y)),
+                (owner.font.width(owner.getValue().substring(0, originalCursorPosition)) + (owner.bordered ? owner.getX() + 4 : owner.getX())),
+                (owner.font.lineHeight + (owner.bordered ? owner.getY() + (owner.getHeight() - 8) / 2 : owner.getY())),
                 owner.getWidth(),
                 owner.getHeight()
 

@@ -47,7 +47,7 @@ public class TinyConfig {
         boolean inLimits = true;
     }
 
-    private static Class configClass;
+    private static Class<?> configClass;
     private static String translationPrefix;
     private static Path path;
 
@@ -154,7 +154,7 @@ public class TinyConfig {
     public static void write() {
         try {
             if (!Files.exists(path)) Files.createFile(path);
-            Files.write(path, gson.toJson(configClass.newInstance()).getBytes());
+            Files.write(path, gson.toJson(configClass.getDeclaredConstructor().newInstance()).getBytes());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -176,20 +176,19 @@ public class TinyConfig {
         protected void init() {
             super.init();
 
-            Button done = this.addRenderableWidget(new Button(this.width/2 - 100,this.height - 28,200,20,
-                    Component.translatable("gui.done"), (button) -> {
+            Button done = this.addRenderableWidget(Button.builder(Component.translatable("gui.done"), (button) -> {
                 for (EntryInfo info : entries)
                     try { info.field.set(null, info.value); }
                     catch (IllegalAccessException ignore) {}
                 write();
                 minecraft.setScreen(parent);
-            }));
+            }).bounds(this.width/2 - 100,this.height - 28,200,20).build());
 
             int y = 45;
             for (EntryInfo info : entries) {
                 if (info.widget instanceof Map.Entry) {
                     Map.Entry<Button.OnPress,Function<Object,Component>> widget = (Map.Entry<Button.OnPress, Function<Object, Component>>) info.widget;
-                    addRenderableWidget(new Button(width-85,y,info.width,20, widget.getValue().apply(info.value), widget.getKey()));
+                    addRenderableWidget(Button.builder(widget.getValue().apply(info.value), widget.getKey()).bounds(width-85,y,info.width,20).build());
                 }
                 else {
                     EditBox widget = addWidget(new EditBox(font, width-85, y, info.width, 20, null));

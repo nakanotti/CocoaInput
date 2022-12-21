@@ -3,7 +3,7 @@
 	"mixins":[
 		"SharedConstantsMixin",
 		"EditBoxMixin",
-		"SignEditScreenMixin",
+		"AbstractSignEditScreenMixin",
 		"BookEditScreenMixin"
 	],
 	"refmap":"cocoainput.refmap.json",

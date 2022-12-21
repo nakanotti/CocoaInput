@@ -8,16 +8,16 @@ import jp.axer.cocoainput.util.Rect;
 import jp.axer.cocoainput.util.WrapperUtil;
 import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.screens.inventory.SignEditScreen;
+import net.minecraft.client.gui.screens.inventory.AbstractSignEditScreen;
 import net.minecraft.network.chat.Component;
 
-public class SignEditScreenWrapper extends IMEReceiver {
-    private SignEditScreen owner;
+public class AbstractSignEditScreenWrapper extends IMEReceiver {
+    private AbstractSignEditScreen owner;
     private IMEOperator myIME;
 
 
-    public SignEditScreenWrapper(SignEditScreen field) {
-        ModLogger.debug("SignEditScreen init: " + field.hashCode());
+    public AbstractSignEditScreenWrapper(AbstractSignEditScreen field) {
+        ModLogger.debug("AbstractSignEditScreen init: " + field.hashCode());
         owner = field;
         myIME = CocoaInput.getController().generateIMEOperator(this);
         myIME.setFocused(true);
