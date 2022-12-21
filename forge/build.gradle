@@ -18,9 +18,9 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
-version = '4.0.5'
+version = '4.0.6'
 group = 'jp.axer.cocoainput' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'CocoaInput-1.19-forge'
+archivesBaseName = 'CocoaInput-1.19.3-forge'
 
 // Mojang ships Java 16 to end users in 1.17+ instead of Java 8 in 1.16 or lower, so your mod should target Java 16.
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
