@@ -38,4 +38,8 @@ public class ForgeLoader {
     public void didChangeGui(ScreenEvent.Opening event) {
 		this.instance.distributeScreen(event.getScreen());
 	}
+	@SubscribeEvent
+	public void didChangeGui(ScreenEvent.Closing event) {
+		this.instance.distributeScreen(event.getScreen());
+	}
 }
