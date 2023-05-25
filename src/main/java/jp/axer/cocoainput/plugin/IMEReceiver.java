@@ -27,8 +27,10 @@ public abstract class IMEReceiver {
 		}
 		preeditBegin = false;
 		cursorVisible = true;
-		this.setText((new StringBuffer(this.getText()))
+		if (length > 0) {
+			this.setText((new StringBuffer(this.getText()))
 				.replace(originalCursorPosition, originalCursorPosition + length, "").toString());
+		}
 		length = 0;
 		this.setCursorPos(originalCursorPosition);
 		this.setSelectionPos(originalCursorPosition);
