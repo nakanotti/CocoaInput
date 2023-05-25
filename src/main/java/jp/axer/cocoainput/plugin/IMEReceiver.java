@@ -14,23 +14,30 @@ public abstract class IMEReceiver {
 	private boolean preeditBegin = false;
 	protected int originalCursorPosition = 0;
 
+	protected int getMarkedLength()
+	{
+		return length;
+	}
+
+	private void replaceMarkedText(String text, int pos, int len)
+	{
+		//ModLogger.log("replaceMarkedText() ... (new StringBuffer(\"" + this.getText() + "\").replace(" + pos + ", " + (pos + len) + ", \"" + text + "\")");
+		this.setText((new StringBuffer(this.getText()))
+			.replace(pos, pos + len, text).toString());
+	}
+
 	/*
 	 * position1 length1は下線と強調変換のため必須 position2 length2は意味をなしてない
 	 * positionの位置から文字数lengthの範囲という意味
 	 */
 	public void insertText(String aString, int position1, int length1) {//確定文字列 現状aString以外の引数は意味をなしてない
-		if (true) {
-			ModLogger.log("just comming:(\"" + aString + "\") now:(\"" + getText() + "\")");
-		}
+		//ModLogger.log("just comming:(\"" + aString + "\") now:(\"" + getText() + "\") length:" + length);
 		if (!preeditBegin) {
 			originalCursorPosition = this.getCursorPos();
 		}
 		preeditBegin = false;
 		cursorVisible = true;
-		if (length > 0) {
-			this.setText((new StringBuffer(this.getText()))
-				.replace(originalCursorPosition, originalCursorPosition + length, "").toString());
-		}
+		replaceMarkedText("", originalCursorPosition, getMarkedLength());
 		length = 0;
 		this.setCursorPos(originalCursorPosition);
 		this.setSelectionPos(originalCursorPosition);
@@ -83,8 +90,7 @@ public abstract class IMEReceiver {
 			caretPosition=0;
 			commitString=PreeditFormatter.SECTION+"n"+aString+PreeditFormatter.SECTION+"r";
 		}
-		this.setText((new StringBuffer(this.getText()))
-				.replace(originalCursorPosition, originalCursorPosition + length, commitString).toString());
+		replaceMarkedText(commitString, originalCursorPosition, getMarkedLength());
 		length = commitString.length();
 		if (hasCaret) {
 			this.cursorVisible = true;
@@ -121,10 +127,9 @@ public abstract class IMEReceiver {
 	}
 
 	protected void insertTextEmurated(String aString) {
-		this.setText((new StringBuffer(this.getText()))
-				.replace(this.getCursorPos(), this.getCursorPos(),
-						aString.substring(0, aString.length()))
-				.toString());
+		if (this.getCursorPos() <= this.getText().length()) {
+			replaceMarkedText(aString.substring(0, aString.length()), this.getCursorPos(), 0);
+		}
 		length = 0;
 		this.setCursorPos(this.getCursorPos() + aString.length());
 		this.notifyParent(this.getText());

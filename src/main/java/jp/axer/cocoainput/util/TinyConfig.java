@@ -20,8 +20,8 @@ import java.util.regex.Pattern;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Button;
@@ -187,6 +187,7 @@ public class TinyConfig {
             int y = 45;
             for (EntryInfo info : entries) {
                 if (info.widget instanceof Map.Entry) {
+                    @SuppressWarnings("unchecked") // info.widget への無検査キャスト警告の抑制
                     Map.Entry<Button.OnPress,Function<Object,Component>> widget = (Map.Entry<Button.OnPress, Function<Object, Component>>) info.widget;
                     addRenderableWidget(Button.builder(widget.getValue().apply(info.value), widget.getKey()).bounds(width-85,y,info.width,20).build());
                 }
@@ -194,6 +195,7 @@ public class TinyConfig {
                     EditBox widget = addWidget(new EditBox(font, width-85, y, info.width, 20, null));
                     widget.setValue(info.tempValue);
 
+                    @SuppressWarnings("unchecked") // info.widget への無検査キャスト警告の抑制
                     Predicate<String> processor = ((BiFunction<EditBox, Button, Predicate<String>>) info.widget).apply(widget,done);
                     widget.setFilter(processor);
                     processor.test(info.tempValue);
@@ -206,20 +208,20 @@ public class TinyConfig {
         }
 
         @Override
-        public void render(PoseStack matrices, int mouseX, int mouseY, float delta) {
-            this.renderBackground(matrices);
+        public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
+            this.renderBackground(guiGraphics);
 
             if (mouseY >= 40 && mouseY <= 39 + entries.size()*30) {
                 int low = ((mouseY-10)/30)*30 + 10 + 2;
-                fill(matrices, 0, low, width, low+30-4, 0x33FFFFFF);
+                guiGraphics.fill(0, low, width, low+30-4, 0x33FFFFFF);
             }
 
-            super.render(matrices, mouseX, mouseY, delta);
-            drawCenteredString(matrices, font, title, width/2, 15, 0xFFFFFF);
+            super.render(guiGraphics, mouseX, mouseY, delta);
+            guiGraphics.drawCenteredString(font, title, width/2, 15, 0xFFFFFF);
 
             int y = 40;
             for (EntryInfo info : entries) {
-				drawString(matrices, font, Component.literal(info.comment), 12, y + 10, 0xFFFFFF);
+				guiGraphics.drawString(font, Component.literal(info.comment), 12, y + 10, 0xFFFFFF);
 				/*
                 if (info.error != null && info.error.getKey().isMouseOver(mouseX,mouseY))
                     renderTooltip(matrices, info.error.getValue(), mouseX, mouseY);

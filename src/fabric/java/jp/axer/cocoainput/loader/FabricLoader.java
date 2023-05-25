@@ -1,7 +1,6 @@
 package jp.axer.cocoainput.loader;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import jp.axer.cocoainput.CocoaInput;
 import jp.axer.cocoainput.util.ModLogger;
 import jp.axer.cocoainput.util.FCConfig;

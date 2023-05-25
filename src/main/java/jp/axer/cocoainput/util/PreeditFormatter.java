@@ -14,6 +14,6 @@ public class PreeditFormatter {
         }
         builder.insert(0, SECTION+"r"+SECTION+"n");//最初に下線修飾をセット
         builder.append(SECTION+"r");//最後に修飾をリセット
-        return new Tuple3(new String(builder), position1, hasCaret);
+        return new Tuple3<String, Integer, Boolean>(new String(builder), position1, hasCaret);
     }
 }

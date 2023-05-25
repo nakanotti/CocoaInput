@@ -12,8 +12,8 @@ function Build()
     local mod_ver=`cat gradle.properties | sed -E '/[^#]\W*mod_version\s*=/p;d' | sed -E 's/.+=\s*([-+.0-z]+)/\1/'`
     local name=${base_name}-${mod_ver}
     local target=${name}${tag}.jar
-    ./gradlew --no-daemon build
-    cp -f ./build/libs/${name}.jar ../${target}
+    rm -f ../${target}
+    ./gradlew --no-daemon build && cp -f ./build/libs/${name}.jar ../${target}
     popd
 
     # INSTALL for Debug
@@ -24,12 +24,12 @@ function Build()
     fi
 }
 
-TAG=-PREVIEW3
-DEFAULT_FABRIC_MODS=${APPDATA:-~}/.minecraft_fabric_1.19.4/mods
+TAG=-PREVIEW
+DEFAULT_FABRIC_MODS=${APPDATA:-~}/.minecraft_fabric_1.20/mods
 DEFAULT_FORGE_MODS=${APPDATA:-~}/.minecraft_forge_1.19.4/mods
 
 ### Fabric
-Build fabric ${TAG} ${FABRIC_MODS-${DEFAULT_FABRIC_MODS}}
+Build fabric ${TAG} ${MC_INSTALL_FABRIC_MODS-${DEFAULT_FABRIC_MODS}}
 
 ### Forge
-Build forge ${TAG} ${FORGE_MODS-${DEFAULT_FORGE_MODS}}
+#Build forge ${TAG} ${MC_INSTALL_FORGE_MODS-${DEFAULT_FORGE_MODS}}
