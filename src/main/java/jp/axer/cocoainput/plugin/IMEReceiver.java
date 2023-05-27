@@ -1,7 +1,7 @@
 package jp.axer.cocoainput.plugin;
 
 import jp.axer.cocoainput.CocoaInput;
-import jp.axer.cocoainput.arch.win.Logger;
+import jp.axer.cocoainput.util.ModLogger;
 import jp.axer.cocoainput.util.PreeditFormatter;
 import jp.axer.cocoainput.util.Rect;
 import jp.axer.cocoainput.util.Tuple3;
@@ -20,7 +20,7 @@ public abstract class IMEReceiver {
 	 */
 	public void insertText(String aString, int position1, int length1) {//確定文字列 現状aString以外の引数は意味をなしてない
 		if (true) {
-			Logger.log("just comming:(" + aString + ") now:(" + getText() + ")");
+			ModLogger.log("just comming:(\"" + aString + "\") now:(\"" + getText() + "\")");
 		}
 		if (!preeditBegin) {
 			originalCursorPosition = this.getCursorPos();
@@ -68,8 +68,11 @@ public abstract class IMEReceiver {
 		boolean hasCaret;
 		String commitString;
 		if (CocoaInput.config.isAdvancedPreeditDraw()) {
-			Tuple3<String, Integer, Boolean> formattedText = PreeditFormatter.formatMarkedText(aString, position1,
-					length1);
+			//ModLogger.log("PreeditFormatter.formatMarkedText(\"" + aString + "\", " + position1 + ", " + length1 + ")");
+			int max = aString.length();
+			Tuple3<String, Integer, Boolean> formattedText = PreeditFormatter.formatMarkedText(aString,
+				position1 > max ? max : position1,
+				position1 + length1 > max ? max - position1 : length1);
 			commitString = formattedText._1();
 			caretPosition = formattedText._2() + 4;//相対値
 			hasCaret = formattedText._3();
