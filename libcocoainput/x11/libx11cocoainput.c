@@ -197,7 +197,7 @@ void initialize(
                 XNFocusWindow,
                 xwindow,
                 XNInputStyle,
-                XIMPreeditCallbacks|XIMStatusNone,
+                XIMPreeditCallbacks|XIMStatusCallbacks,
                 //XIMPreeditNothing|XIMStatusNothing,
                 XNPreeditAttributes,
                 preeditCallbacksList(),
