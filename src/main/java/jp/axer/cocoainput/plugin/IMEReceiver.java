@@ -14,11 +14,6 @@ public abstract class IMEReceiver {
 	private boolean preeditBegin = false;
 	protected int originalCursorPosition = 0;
 
-	protected int getMarkedLength()
-	{
-		return length;
-	}
-
 	private void replaceMarkedText(String text, int pos, int len)
 	{
 		//ModLogger.log("replaceMarkedText() ... (new StringBuffer(\"" + this.getText() + "\").replace(" + pos + ", " + (pos + len) + ", \"" + text + "\")");
@@ -37,7 +32,7 @@ public abstract class IMEReceiver {
 		}
 		preeditBegin = false;
 		cursorVisible = true;
-		replaceMarkedText("", originalCursorPosition, getMarkedLength());
+		replaceMarkedText("", originalCursorPosition, length);
 		length = 0;
 		this.setCursorPos(originalCursorPosition);
 		this.setSelectionPos(originalCursorPosition);
@@ -90,7 +85,7 @@ public abstract class IMEReceiver {
 			caretPosition=0;
 			commitString=PreeditFormatter.SECTION+"n"+aString+PreeditFormatter.SECTION+"r";
 		}
-		replaceMarkedText(commitString, originalCursorPosition, getMarkedLength());
+		replaceMarkedText(commitString, originalCursorPosition, length);
 		length = commitString.length();
 		if (hasCaret) {
 			this.cursorVisible = true;

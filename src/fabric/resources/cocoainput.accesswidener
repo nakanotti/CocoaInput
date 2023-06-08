@@ -4,6 +4,7 @@ accessible field net/minecraft/client/gui/components/EditBox bordered Z
 accessible field net/minecraft/client/gui/components/EditBox value Ljava/lang/String;
 accessible field net/minecraft/client/gui/components/EditBox frame I
 accessible method net/minecraft/client/gui/components/EditBox onValueChange (Ljava/lang/String;)V 
+accessible method net/minecraft/client/gui/screens/inventory/AbstractSignEditScreen setMessage (Ljava/lang/String;)V 
 accessible field net/minecraft/client/gui/screens/inventory/AbstractSignEditScreen line I
 accessible field net/minecraft/client/gui/screens/inventory/AbstractSignEditScreen frame I
 accessible field net/minecraft/client/gui/screens/inventory/AbstractSignEditScreen sign Lnet/minecraft/world/level/block/entity/SignBlockEntity;

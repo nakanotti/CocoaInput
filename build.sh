@@ -26,10 +26,10 @@ function Build()
 
 TAG=-PREVIEW
 DEFAULT_FABRIC_MODS=${APPDATA:-~}/.minecraft_fabric_1.20/mods
-DEFAULT_FORGE_MODS=${APPDATA:-~}/.minecraft_forge_1.19.4/mods
+DEFAULT_FORGE_MODS=${APPDATA:-~}/.minecraft_forge_1.20/mods
 
 ### Fabric
 Build fabric ${TAG} ${MC_INSTALL_FABRIC_MODS-${DEFAULT_FABRIC_MODS}}
 
 ### Forge
-#Build forge ${TAG} ${MC_INSTALL_FORGE_MODS-${DEFAULT_FORGE_MODS}}
+Build forge ${TAG} ${MC_INSTALL_FORGE_MODS-${DEFAULT_FORGE_MODS}}
