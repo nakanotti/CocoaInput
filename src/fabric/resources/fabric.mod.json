@@ -14,7 +14,7 @@
   },
 
   "license": "MMPLJ",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/cocoainput/icon.png",
 
   "environment": "*",
   "entrypoints": {
