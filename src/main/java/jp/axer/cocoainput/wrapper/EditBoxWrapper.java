@@ -34,7 +34,7 @@ public class EditBoxWrapper extends IMEReceiver {
     }
 
     protected void setText(String text) {
-    	owner.value=text;
+    	owner.setValue(text);
     }
 
 	protected String getText() {
@@ -70,7 +70,6 @@ public class EditBoxWrapper extends IMEReceiver {
     }
 
 	protected void notifyParent(String text) {
-		// TODO 自動生成されたメソッド・スタブ
     	owner.onValueChange(text);
 
 	}
