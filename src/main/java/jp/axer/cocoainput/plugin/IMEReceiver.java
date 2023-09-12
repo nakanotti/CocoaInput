@@ -3,7 +3,7 @@ package jp.axer.cocoainput.plugin;
 import java.util.function.BooleanSupplier;
 import org.jetbrains.annotations.Nullable;
 import jp.axer.cocoainput.CocoaInput;
-import jp.axer.cocoainput.util.ModLogger;
+//import jp.axer.cocoainput.util.ModLogger;
 import jp.axer.cocoainput.util.PreeditFormatter;
 import jp.axer.cocoainput.util.Rect;
 import jp.axer.cocoainput.util.Tuple3;
@@ -19,7 +19,7 @@ public abstract class IMEReceiver {
 
 	private void replaceMarkedText(String text, int pos, int len)
 	{
-		//ModLogger.log("replaceMarkedText() ... (new StringBuffer(\"" + this.getText() + "\").replace(" + pos + ", " + (pos + len) + ", \"" + text + "\")");
+		//ModLogger.debug("replaceMarkedText() ... (new StringBuffer(\"" + this.getText() + "\").replace(" + pos + ", " + (pos + len) + ", \"" + text + "\")");
 		this.setText((new StringBuffer(this.getText()))
 			.replace(pos, pos + len, text).toString());
 	}
@@ -29,7 +29,7 @@ public abstract class IMEReceiver {
 	 * positionの位置から文字数lengthの範囲という意味
 	 */
 	public void insertText(String aString, int position1, int length1) {//確定文字列 現状aString以外の引数は意味をなしてない
-		//ModLogger.log("just comming:(\"" + aString + "\") now:(\"" + getText() + "\") length:" + length);
+		//ModLogger.debug("just comming:(\"" + aString + "\") now:(\"" + getText() + "\") length:" + length);
 		if (!preeditBegin) {
 			originalCursorPosition = this.getCursorPos();
 		}
@@ -78,7 +78,7 @@ public abstract class IMEReceiver {
 			commitString = aString;
 		}
 		else if (CocoaInput.config.isAdvancedPreeditDraw()) {
-			//ModLogger.log("PreeditFormatter.formatMarkedText(\"" + aString + "\", " + position1 + ", " + length1 + ")");
+			//ModLogger.debug("PreeditFormatter.formatMarkedText(\"" + aString + "\", " + position1 + ", " + length1 + ")");
 			int max = aString.length();
 			Tuple3<String, Integer, Boolean> formattedText = PreeditFormatter.formatMarkedText(aString,
 				position1 > max ? max : position1,

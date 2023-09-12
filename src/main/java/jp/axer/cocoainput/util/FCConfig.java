@@ -1,6 +1,5 @@
 package jp.axer.cocoainput.util;
 
-import jp.axer.cocoainput.util.ConfigPack;
 
 public class FCConfig extends TinyConfig implements ConfigPack{
 
@@ -13,12 +12,10 @@ public class FCConfig extends TinyConfig implements ConfigPack{
 
 	@Override
 	public boolean isAdvancedPreeditDraw() {
-		// TODO 自動生成されたメソッド・スタブ
 		return advancedPreeditDraw;
 	}
 	@Override
 	public boolean isNativeCharTyped() {
-		// TODO 自動生成されたメソッド・スタブ
 		return nativeCharTyped;
 	}
 

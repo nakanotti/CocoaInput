@@ -52,7 +52,8 @@ public class X11Controller implements CocoaInputController {
 	};
 
 	public static void setupKeyboardEvent() {
-		Minecraft.getInstance().keyboardHandler.setup(window);
+		Minecraft mc = Minecraft.getInstance();
+		mc.keyboardHandler.setup(window);
 		GLFW.glfwSetCharModsCallback(window, (p_228000_1_, p_228000_3_, p_228000_4_) -> {
 			Minecraft.getInstance().execute(() -> {
 				if (X11Controller.focusedOperator != null) {
@@ -61,7 +62,7 @@ public class X11Controller implements CocoaInputController {
 							0);
 
 				} else {
-					Minecraft.getInstance().keyboardHandler.charTyped(p_228000_1_, p_228000_3_, p_228000_4_);
+					mc.keyboardHandler.charTyped(p_228000_1_, p_228000_3_, p_228000_4_);
 				}
 			});
 		});
@@ -86,7 +87,6 @@ public class X11Controller implements CocoaInputController {
 
 	@Override
 	public IMEOperator generateIMEOperator(IMEReceiver arg0) {
-		// TODO Auto-generated method stub
 		return new X11IMEOperator(arg0);
 	}
 

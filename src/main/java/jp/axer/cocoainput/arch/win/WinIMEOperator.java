@@ -12,19 +12,16 @@ public class WinIMEOperator implements IMEOperator {
 	
 	@Override
 	public void discardMarkedText() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void removeInstance() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void setFocused(boolean arg0) {
-		// TODO Auto-generated method stub
 		if(arg0==focus) {
 			return ;
 		}

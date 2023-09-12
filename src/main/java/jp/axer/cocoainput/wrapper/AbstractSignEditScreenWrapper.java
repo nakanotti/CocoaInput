@@ -34,7 +34,7 @@ public class AbstractSignEditScreenWrapper extends IMEReceiver {
 
 	protected void setCursorInvisible() {
 		owner.frame=6;
-	} //TODO
+	}
 
 	protected int getCursorPos() {
 		return owner.signField.getCursorPos();

@@ -21,7 +21,7 @@ public class BookEditScreenWrapper extends IMEReceiver {
     private BookEditScreen owner;
 
     public BookEditScreenWrapper(BookEditScreen field) {
-        ModLogger.log("BookEditScreen init: " + field.hashCode());
+        ModLogger.debug("BookEditScreen init: " + field.hashCode());
         this.allowTextDecoration = () -> !owner.isSigning;
         owner = field;
         myIME = CocoaInput.getController().generateIMEOperator(this);
@@ -48,7 +48,7 @@ public class BookEditScreenWrapper extends IMEReceiver {
 
 	protected void setCursorInvisible() {
 		owner.frameTick=6;
-	} //TODO
+	}
 
 	protected int getCursorPos() {
 		if(owner.isSigning) {

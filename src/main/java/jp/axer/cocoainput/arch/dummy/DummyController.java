@@ -18,7 +18,6 @@ public class DummyController implements CocoaInputController{
 
 	@Override
 	public void screenOpenNotify(Screen sc) {
-		// TODO 自動生成されたメソッド・スタブ
 		
 	}
 }

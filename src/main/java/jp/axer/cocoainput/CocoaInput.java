@@ -79,9 +79,10 @@ public class CocoaInput {
 				libFile = ClassLoader.getSystemResourceAsStream(libraryPath);
 			}
 		}
-		File nativeDir = new File(Minecraft.getInstance().gameDirectory.getAbsolutePath().concat("/native"));
-		File copyLibFile = new File(
-				Minecraft.getInstance().gameDirectory.getAbsolutePath().concat("/native/" + libraryName));
+		Minecraft mc = Minecraft.getInstance();
+		String nativeDirString = mc.gameDirectory.getAbsolutePath().concat("/native");
+		File nativeDir = new File(nativeDirString);
+		File copyLibFile = new File(nativeDirString.concat("/" + libraryName));
 		try {
 			nativeDir.mkdir();
 			FileOutputStream fos = new FileOutputStream(copyLibFile);
