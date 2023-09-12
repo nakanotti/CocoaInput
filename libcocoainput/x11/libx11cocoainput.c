@@ -206,7 +206,7 @@ void initialize(
                 NULL);
 	CILog("Created activeic:%p", activeic);
 	XSetICFocus(inactiveic);
-	XUnsetICFocus(activeic);
+	if (activeic) XUnsetICFocus(activeic);
 	CILog("Completed ic focus");
 	XDestroyIC(x11c->ic);
 	x11c->ic = inactiveic;
@@ -217,7 +217,7 @@ void initialize(
 void set_focus(int flag){
 	XUnsetICFocus(x11c->ic);
 	if(flag){
-		x11c->ic=activeic;
+		if (activeic) x11c->ic=activeic;
 	}
 	else{
 		x11c->ic= inactiveic;
