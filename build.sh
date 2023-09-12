@@ -24,7 +24,7 @@ function Build()
     fi
 }
 
-TAG=-PREVIEW
+TAG=-PREVIEW2
 DEFAULT_FABRIC_MODS=${APPDATA:-~}/.minecraft_fabric_1.20.1/mods
 DEFAULT_FORGE_MODS=${APPDATA:-~}/.minecraft_forge_1.20.1/mods
 
