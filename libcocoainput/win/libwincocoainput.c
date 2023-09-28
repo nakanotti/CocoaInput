@@ -21,7 +21,7 @@ HIMC himc;
 LRESULT compositionLocationNotify(HWND hWnd){
 	HIMC imc=NULL;
 	float *rect= malloc(sizeof(float)*4);
-	CILog("ready call javaRect");
+	CIDebug("ready call javaRect");
 	if(javaRect(rect)){
 		free(rect);
 		return FALSE;
@@ -34,7 +34,7 @@ LRESULT compositionLocationNotify(HWND hWnd){
 	return TRUE;
 }
 
-LRESULT CALLBACK (*glfwWndProc)(HWND,UINT,WPARAM,LPARAM);
+WNDPROC glfwWndProc;
 LRESULT CALLBACK wrapper_wndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam){
 	switch(msg){
 		case WM_IME_NOTIFY:{
@@ -57,13 +57,13 @@ LRESULT CALLBACK wrapper_wndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
 		case WM_IME_COMPOSITION:{
 			HIMC imc=NULL;
 			LONG textSize,attrSize,clauseSize;
-			int i, focusedBlock, length;
+			int length;
 			LPWSTR buffer;
 			LPSTR attributes;
 			DWORD* clauses;
 			LONG cursor=0;
 			if(lParam&GCS_RESULTSTR){
-				CILog("ResultStr");
+				CIDebug("ResultStr");
 				imc=ImmGetContext(hwnd);
 				textSize = ImmGetCompositionStringW(imc, GCS_RESULTSTR, NULL, 0);
 				length = textSize / sizeof(WCHAR);
@@ -122,7 +122,7 @@ LRESULT CALLBACK wrapper_wndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
 
 
 void initialize(
-	long hwndp,
+	HWND hwndp,
 	int*(*c_draw)(wchar_t*,int,int),
 	void(*c_done)(wchar_t*),
 	int (*c_rect)(float*),
@@ -134,27 +134,27 @@ void initialize(
 	CILog("CocoaInput Windows Clang Initializer start. library compiled at  %s %s",__DATE__,__TIME__);
 	setCallback(c_draw,c_done,c_rect);
 	hwnd=(HWND)hwndp;
-	glfwWndProc = GetWindowLongPtr(hwnd,GWLP_WNDPROC);
-	SetWindowLongPtr(hwnd,GWLP_WNDPROC,wrapper_wndProc);
+	glfwWndProc = (WNDPROC) GetWindowLongPtr(hwnd,GWLP_WNDPROC);
+	SetWindowLongPtr(hwnd,GWLP_WNDPROC, (LONG_PTR) wrapper_wndProc);
 	CILog("Window procedure replaced");
 	//input_himc = ImmGetContext(hwnd);
 	/*if(!hImc){
 	hImc = ImmCreateContext();
 	HIMC oldhImc = ImmAssociateContext( hwnd, hImc );
-}*/
-//ImmReleaseContext(hwnd,input_himc);
-himc = ImmGetContext(hwnd);
-if(!himc){
-	himc = ImmCreateContext();
-}
-ImmReleaseContext(hwnd,himc);
-himc=ImmAssociateContext(hwnd,0);
-CILog("CocoaInput Windows initializer done!");
+	}*/
+	//ImmReleaseContext(hwnd,input_himc);
+	himc = ImmGetContext(hwnd);
+	if(!himc){
+		himc = ImmCreateContext();
+	}
+	ImmReleaseContext(hwnd,himc);
+	himc=ImmAssociateContext(hwnd,0);
+	CILog("CocoaInput Windows initializer done!");
 }
 
 void set_focus(int flag){
 
-	CILog("setFocused:%d",flag);
+	CIDebug("setFocused:%d",flag);
 	if(flag){
 		ImmAssociateContext(hwnd,himc);
 		compositionLocationNotify(hwnd);

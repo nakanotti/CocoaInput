@@ -25,9 +25,4 @@ public class EditBoxMixin {
 	 private void setCanLoseFocus(boolean b,CallbackInfo ci) {
 		 wrapper.setCanLoseFocus(b);
 	 }
-	 @Inject(method="tick",at=@At("HEAD"),cancellable=true)
-	 private void tick(CallbackInfo ci) {
-		 wrapper.updateCursorCounter();
-		 ci.cancel();
-	 }
 }

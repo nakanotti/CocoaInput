@@ -7,7 +7,7 @@
 
 
 void initialize(
-	long hwnd,
+	HWND hwnd,
 	int*(*c_draw)(wchar_t*,int,int),
 	void(*c_done)(wchar_t*),
 	int (*c_rect)(float*),

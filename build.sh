@@ -25,8 +25,8 @@ function Build()
 }
 
 TAG=-PREVIEW2
-DEFAULT_FABRIC_MODS=${APPDATA:-~}/.minecraft_fabric_1.20.1/mods
-DEFAULT_FORGE_MODS=${APPDATA:-~}/.minecraft_forge_1.20.1/mods
+DEFAULT_FABRIC_MODS=${APPDATA:-~}/.minecraft_fabric_1.20.2/mods
+DEFAULT_FORGE_MODS=${APPDATA:-~}/.minecraft_forge_1.20.2/mods
 
 ### Fabric
 Build fabric ${TAG} ${MC_INSTALL_FABRIC_MODS-${DEFAULT_FABRIC_MODS}}
