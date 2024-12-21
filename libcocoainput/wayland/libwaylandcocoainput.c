@@ -1,7 +1,5 @@
 #define GLFW_EXPOSE_NATIVE_WAYLAND
 
-#include <GLFW/glfw3.h>
-#include <GLFW/glfw3native.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -17,8 +15,8 @@ struct zwp_text_input_v3 *text_input = NULL;
 struct wl_seat *seat = NULL;
 
 void (*doneCallback)();
-int* (*preeditCallback)(const char*, int32_t, int32_t);
-int* (*commitCallback)(const char*);
+void (*preeditCallback)(const char*, int32_t, int32_t);
+void (*commitCallback)(const char*);
 
 static void global_listener(void *data, struct wl_registry *registry,
                             uint32_t name, const char *interface, uint32_t version) {
@@ -50,14 +48,14 @@ void preedit_string(void *data,
 			        const char *text,
 			        int32_t cursor_begin,
 			        int32_t cursor_end) {
-    CIDebug("preedit: %s,%d,%d\n", text, cursor_begin, cursor_end);
+    CIDebug("preedit: %s,%d,%d", text, cursor_begin, cursor_end);
     preeditCallback(text, cursor_begin, cursor_end);
 }
 
 void commit_string(void *data,
 			       struct zwp_text_input_v3 *zwp_text_input_v3,
 			       const char *text) {
-    CIDebug("commit: %s\n", text);
+    CIDebug("commit: %s", text);
     commitCallback(text);
 }
 
@@ -69,6 +67,7 @@ void delete_surrounding_text(void *data,
 void text_done(void *data,
                struct zwp_text_input_v3 *zwp_text_input_v3,
                uint32_t serial) {
+    CIDebug("done");
     doneCallback();
 }
 
@@ -86,19 +85,22 @@ void error_callback(int error, const char* description) {
 }
 
 void focus() {
+    CIDebug("Focus");
     zwp_text_input_v3_enable(text_input);
     zwp_text_input_v3_commit(text_input);
 }
 
 void unfocus() {
+    CIDebug("Unfocus");
     zwp_text_input_v3_disable(text_input);
     zwp_text_input_v3_commit(text_input);
 }
 
 void initialize(
     void (*done)(),
-    int* (*preedit)(const char*, int32_t, int32_t),
-    int* (*commit)(const char*),
+    void (*preedit)(const char*, int32_t, int32_t),
+    void (*commit)(const char*),
+    struct wl_display *display,
 	LogFunction log,
 	LogFunction error,
 	LogFunction debug
@@ -108,7 +110,6 @@ void initialize(
     doneCallback = done;
     preeditCallback = preedit;
     commitCallback = commit;
-    struct wl_display *display = glfwGetWaylandDisplay();
 
     registry = wl_display_get_registry(display);
     wl_registry_add_listener(registry, &registry_listener, NULL);

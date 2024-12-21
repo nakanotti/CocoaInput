@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import jp.axer.cocoainput.arch.wayland.WaylandController;
 import org.apache.commons.io.IOUtils;
 
 import com.sun.jna.Platform;
@@ -21,6 +22,7 @@ import jp.axer.cocoainput.util.ConfigPack;
 import jp.axer.cocoainput.util.ModLogger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import org.lwjgl.glfw.GLFW;
 
 public class CocoaInput {
 	private static CocoaInputController controller;
@@ -35,7 +37,9 @@ public class CocoaInput {
 				CocoaInput.applyController(new DarwinController());
 			} else if (Platform.isWindows()) {
 				CocoaInput.applyController(new WinController());
-			} else if (Platform.isX11()) {
+			} else if (isWayland()) {
+				CocoaInput.applyController(new WaylandController());
+			} else if (isX11()) {
 				CocoaInput.applyController(new X11Controller());
 			} else {
 				ModLogger.log("CocoaInput cannot find appropriate Controller in running OS.");
@@ -45,6 +49,14 @@ public class CocoaInput {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private boolean isWayland() {
+		return GLFW.glfwGetPlatform() == GLFW.GLFW_PLATFORM_WAYLAND;
+	}
+
+	private boolean isX11() {
+		return GLFW.glfwGetPlatform() == GLFW.GLFW_PLATFORM_X11;
 	}
 
 	public static double getScreenScaledFactor() {

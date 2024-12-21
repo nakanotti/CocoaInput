@@ -2,6 +2,8 @@
 #define _LIBWAYLANDCOCOAINPUT_H
 #include <stdint.h>
 #include "logger.h"
+#include <wayland-client.h>
+#include <wayland-client-protocol.h>
 
 void focus();
 
@@ -9,8 +11,9 @@ void unfocus();
 
 void initialize(
     void (*done)(),
-    int* (*preedit)(const char*, int32_t, int32_t),
-    int* (*commit)(const char*),
+    void (*preedit)(const char*, int32_t, int32_t),
+    void (*commit)(const char*),
+    struct wl_display *display,
 	LogFunction log,
 	LogFunction error,
 	LogFunction debug
