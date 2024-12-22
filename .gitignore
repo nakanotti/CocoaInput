@@ -21,6 +21,7 @@
 !LICENSE
 
 libcocoainput/build
+libcocoainput/wayland/wayland-*
 
 !fabric
 !forge
