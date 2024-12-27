@@ -56,14 +56,6 @@ public class CocoaInput {
 		}
 	}
 
-	private boolean isWayland() {
-		return GLFW.glfwGetPlatform() == GLFW.GLFW_PLATFORM_WAYLAND;
-	}
-
-	private boolean isX11() {
-		return GLFW.glfwGetPlatform() == GLFW.GLFW_PLATFORM_X11;
-	}
-
 	public static double getScreenScaledFactor() {
 		return Minecraft.getInstance().getWindow().getGuiScale();
 	}
