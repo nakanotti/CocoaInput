@@ -33,17 +33,22 @@ public class CocoaInput {
 		ModLogger.log("Modloader:" + loader);
 		CocoaInput.zipsource = zipfile;
 		try {
-			if (Platform.isMac()) {
-				CocoaInput.applyController(new DarwinController());
-			} else if (Platform.isWindows()) {
-				CocoaInput.applyController(new WinController());
-			} else if (isWayland()) {
-				CocoaInput.applyController(new WaylandController());
-			} else if (isX11()) {
-				CocoaInput.applyController(new X11Controller());
-			} else {
-				ModLogger.log("CocoaInput cannot find appropriate Controller in running OS.");
-				CocoaInput.applyController(new DummyController());
+			switch GLFW.glfwGetPlatform() {
+				case GLFW.GLFW_PLATFORM_COCOA:
+					CocoaInput.applyController(new DarwinController());
+					break;
+				case GLFW.GLFW_PLATFORM_WIN32:
+					CocoaInput.applyController(new WinController());
+					break;
+				case GLFW.GLFW_PLATFORM_WAYLAND:
+					CocoaInput.applyController(new WaylandController());
+					break;
+				case GLFW.GLFW_PLATFORM_X11:
+					CocoaInput.applyController(new X11Controller());
+					break;
+				default:
+					ModLogger.log("CocoaInput cannot find appropriate Controller in running OS.");
+					CocoaInput.applyController(new DummyController());
 			}
 			ModLogger.log("CocoaInput has been initialized.");
 		} catch (Exception e) {
@@ -61,7 +66,7 @@ public class CocoaInput {
 
 	public static double getScreenScaledFactor() {
 		return Minecraft.getInstance().getWindow().getGuiScale();
-	}
+	}
 
 	public static void applyController(CocoaInputController controller) throws IOException {
 		CocoaInput.controller = controller;
